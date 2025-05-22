@@ -30,6 +30,12 @@ export const todoReducer = (state = initialState, action) => {
       console.log('delete');
       return { ...state, todos: [...payload.todos] };
 
+    case 'SET_SORT':
+      return { ...state, selectedSort: payload };
+
+    case 'SET_SEARCH':
+      return { ...state, search: payload };
+
     default:
       return state;
   }

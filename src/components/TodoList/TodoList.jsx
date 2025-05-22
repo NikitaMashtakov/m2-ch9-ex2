@@ -4,9 +4,11 @@ import styles from './TodoList.module.css';
 import { useSelector } from 'react-redux';
 
 export const TodoList = ({ debouncedSearch }) => {
+  const search = useSelector((state) => state.search);
   const todos = useSelector((state) => state.todos);
+
   const todosToShow = todos.filter(({ title }) =>
-    title.toLowerCase().includes(debouncedSearch.toLowerCase()),
+    title.toLowerCase().includes(search.toLowerCase()),
   );
   return (
     <div className={styles.container}>

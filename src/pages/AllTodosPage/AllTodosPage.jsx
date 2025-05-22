@@ -6,27 +6,24 @@ import { SearchBar } from 'components/SearchBar/SearchBar';
 import { Selector } from 'components/Selector/Selector';
 import { OPTIONS } from 'constants/sortingOptions';
 import useDebouncedValue from 'hooks/useDebouncedValue';
-import { getTodos } from 'utils/api';
 import { useDispatch, useSelector } from 'react-redux';
+import { getTodosAction } from 'actions/getTodosAction';
 
 const AllTodoPage = () => {
   // const [todos, setTodos] = useState([]);
-  const [search, setSearch] = useState('');
-  const [selectedSort, setSelectedSort] = useState('_sort=id&_order=desc');
+  // const [search, setSearch] = useState('');
+  // const [selectedSort, setSelectedSort] = useState('_sort=id&_order=desc');
   // const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
-
-  const debouncedSearch = useDebouncedValue(search, 250);
+  const selectedSort = useSelector((state) => state.selectedSort);
+  // const debouncedSearch = useDebouncedValue(search, 250);
 
   useEffect(() => {
-    dispatch(getTodos());
-  }, [dispatch]);
+    dispatch(getTodosAction(selectedSort));
+  }, [dispatch, selectedSort]);
 
-  const searchHandler = (value) => {
-    setSearch(value);
-  };
   const selectorHandler = (value) => {
-    setSelectedSort(value);
+    dispatch({ type: 'SET_SORT', payload: value });
   };
 
   // const dispatch = (action) => {
@@ -36,18 +33,18 @@ const AllTodoPage = () => {
   return (
     <>
       <Toolbar>
-        <SearchBar search={search} searchHandler={searchHandler} />
+        <SearchBar />
         <Selector
           label={'Сортировка'}
           selectorId={'sortingSelector'}
           options={OPTIONS}
-          setSelected={selectorHandler}
+          onSetSelected={selectorHandler}
         />
       </Toolbar>
 
       <NewTodoInput placeholder="Новая задача..." buttonName="Добавить" />
 
-      <TodoList debouncedSearch={debouncedSearch} />
+      <TodoList />
     </>
   );
 };

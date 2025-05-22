@@ -75,3 +75,7 @@ input.checked::before {
   outline: none;
   background: #ececec;
 }
+
+.editTodo::-webkit-scrollbar {
+  display: none;
+}

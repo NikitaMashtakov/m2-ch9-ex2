@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 import { Button } from 'components/Button/Button';
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MdOutlineEdit, MdOutlineDelete, MdDone, MdClose } from 'react-icons/md';
 import styles from './Todo.module.css';
 import { useDispatch } from 'react-redux';
-import { editTodo, completeTodo } from 'utils/api';
-import { deleteTodo } from 'utils/api';
+import { completeTodoAction } from 'actions/completeTodoAction';
+import { deleteTodoAction } from 'actions/deleteTodoAction';
+import { editTodoAction } from 'actions/editTodoAction';
 
 export const Todo = ({ id, title, completed }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState('');
   const editInputRef = useRef(null);
   const dispatch = useDispatch();
+
   const startEditTodo = () => {
     setIsEditing(true);
     setText(title);
@@ -22,11 +24,23 @@ export const Todo = ({ id, title, completed }) => {
   };
 
   const confirmEditTodo = (id, text) => {
-    dispatch(editTodo(id, text));
+    dispatch(editTodoAction(id, text));
     setIsEditing(false);
   };
+
+  const onCompleteTodo = (id, completed) => {
+    dispatch(completeTodoAction(id, completed));
+  };
+
+  const onDeleteTodo = (id) => {
+    dispatch(deleteTodoAction(id));
+  };
+
   useEffect(() => {
-    if (isEditing) editInputRef.current.focus();
+    if (isEditing) {
+      editInputRef.current.focus();
+      editInputRef.current.selectionStart = editInputRef.current.value.length;
+    }
   }, [isEditing]);
 
   return (
@@ -37,7 +51,7 @@ export const Todo = ({ id, title, completed }) => {
           type="checkbox"
           id={id}
           checked={completed}
-          onChange={() => dispatch(completeTodo(id, completed))}
+          onChange={() => onCompleteTodo(id, completed)}
         />
         {isEditing ? (
           <textarea
@@ -77,7 +91,7 @@ export const Todo = ({ id, title, completed }) => {
             <MdClose size="20" fill="#ff4e4e" />
           </Button>
         ) : (
-          <Button title={'Удалить'} onClick={() => dispatch(deleteTodo(id))}>
+          <Button title={'Удалить'} onClick={() => onDeleteTodo(id)}>
             <MdOutlineDelete size="20" fill="#ff4e4e" />
           </Button>
         )}

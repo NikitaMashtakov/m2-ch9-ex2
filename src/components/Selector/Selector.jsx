@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import styles from './Selector.module.css';
 import Select from 'react-select';
+import { useDispatch } from 'react-redux';
 
-export const Selector = ({ selectorId, options, setSelected }) => {
+export const Selector = ({ selectorId, options, onSetSelected }) => {
   return (
     <div className={styles.container}>
       <Select
@@ -11,7 +12,7 @@ export const Selector = ({ selectorId, options, setSelected }) => {
         options={options}
         defaultValue={options[0]}
         onChange={({ value }) => {
-          setSelected(value);
+          onSetSelected(value);
         }}
       />
     </div>
@@ -21,5 +22,5 @@ export const Selector = ({ selectorId, options, setSelected }) => {
 Selector.propTypes = {
   selectorId: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.object),
-  setSelected: PropTypes.func,
+  onSetSelected: PropTypes.func,
 };

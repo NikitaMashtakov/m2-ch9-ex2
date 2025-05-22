@@ -1,16 +1,16 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styles from './NewTodoInput.module.css';
 import PropTypes from 'prop-types';
 import { Button } from 'components/Button/Button';
 import { useDispatch } from 'react-redux';
-import { addTodo } from 'utils/api';
+import { addTodoAction } from 'actions/addTodoAction';
 
 export const NewTodoInput = ({ buttonName, placeholder }) => {
   const [text, setText] = useState('');
 
   const dispatch = useDispatch();
   const onButtonClick = () => {
-    dispatch(addTodo(text));
+    dispatch(addTodoAction(text));
     setText('');
   };
 

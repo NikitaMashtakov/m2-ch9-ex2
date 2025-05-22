@@ -17,6 +17,7 @@ export default defineConfig({
       utils: path.resolve(__dirname, './src/utils'),
       contexts: path.resolve(__dirname, './src/contexts'),
       reducers: path.resolve(__dirname, './src/reducers'),
+      actions: path.resolve(__dirname, './src/actions'),
     },
   },
 });
