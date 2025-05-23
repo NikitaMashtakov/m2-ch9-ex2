@@ -1,16 +1,27 @@
-import PropTypes from 'prop-types';
 import styles from './SearchBar.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useCallback, useMemo, useState } from 'react';
+import debounce from 'utils/debounce';
 
 export const SearchBar = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('');
   const dispatch = useDispatch();
-  const search = useSelector((state) => state.search);
+
+  const memoizedDispatch = useCallback(
+    (value) => dispatch({ type: 'SET_SEARCH', payload: value }),
+    [dispatch],
+  );
+
+  const debouncedSearch = useMemo(
+    () => debounce(memoizedDispatch, 250),
+    [memoizedDispatch],
+  );
+
   const searchHandler = (value) => {
-    dispatch({ type: 'SET_SEARCH', payload: value });
-    // setSearch(value);
+    setValue(value);
+    debouncedSearch(value);
   };
+
   return (
     <div className={styles.container}>
       <input
@@ -23,9 +34,4 @@ export const SearchBar = () => {
       />
     </div>
   );
-};
-
-SearchBar.propTypes = {
-  search: PropTypes.string,
-  searchHandler: PropTypes.func,
 };

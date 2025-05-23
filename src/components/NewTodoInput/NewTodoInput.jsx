@@ -44,5 +44,4 @@ export const NewTodoInput = ({ buttonName, placeholder }) => {
 NewTodoInput.propTypes = {
   buttonName: PropTypes.string,
   placeholder: PropTypes.string,
-  inputHandler: PropTypes.func,
 };

@@ -36,6 +36,9 @@ export const todoReducer = (state = initialState, action) => {
     case 'SET_SEARCH':
       return { ...state, search: payload };
 
+    case 'UPDATE_LOADING':
+      return { ...state, isLoading: payload };
+
     default:
       return state;
   }

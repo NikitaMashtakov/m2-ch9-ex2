@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './Selector.module.css';
 import Select from 'react-select';
-import { useDispatch } from 'react-redux';
 
 export const Selector = ({ selectorId, options, onSetSelected }) => {
   return (

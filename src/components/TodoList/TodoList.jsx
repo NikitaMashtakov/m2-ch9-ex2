@@ -1,18 +1,21 @@
 import { Todo } from 'components/Todo/Todo';
-import PropTypes from 'prop-types';
 import styles from './TodoList.module.css';
 import { useSelector } from 'react-redux';
+import Loader from 'components/Loader/Loader';
 
-export const TodoList = ({ debouncedSearch }) => {
+export const TodoList = () => {
   const search = useSelector((state) => state.search);
   const todos = useSelector((state) => state.todos);
+  const isLoading = useSelector((state) => state.isLoading);
 
   const todosToShow = todos.filter(({ title }) =>
     title.toLowerCase().includes(search.toLowerCase()),
   );
   return (
     <div className={styles.container}>
-      {todosToShow.length !== 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : todosToShow.length !== 0 ? (
         todosToShow.map(({ id, title, completed }) => (
           <Todo key={id} id={id} title={title} completed={completed} />
         ))
@@ -21,8 +24,4 @@ export const TodoList = ({ debouncedSearch }) => {
       )}
     </div>
   );
-};
-
-TodoList.propTypes = {
-  debouncedSearch: PropTypes.string,
 };
