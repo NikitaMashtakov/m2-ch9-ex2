@@ -4,12 +4,6 @@ export const getTodos = (selectedSort) => {
   return fetch(`${baseUrl}?${selectedSort}`).then((response) => response.json());
 };
 
-// export const getTodoById = (id) => {
-//   return fetch(`${baseUrl}/${id}`)
-//     .then((response) => response.json())
-//     .catch((error) => console.log(error));
-// };
-
 export const completeTodo = (id, completed) => {
   return fetch(`${baseUrl}/${id}`, {
     method: 'PATCH',

@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import Loader from 'components/Loader/Loader';
 
 export const TodoList = () => {
-  const search = useSelector((state) => state.search);
-  const todos = useSelector((state) => state.todos);
-  const isLoading = useSelector((state) => state.isLoading);
+  const search = useSelector((state) => state.appState.search);
+  const todos = useSelector((state) => state.todosState.todos);
+  const isLoading = useSelector((state) => state.appState.isLoading);
 
   const todosToShow = todos.filter(({ title }) =>
     title.toLowerCase().includes(search.toLowerCase()),

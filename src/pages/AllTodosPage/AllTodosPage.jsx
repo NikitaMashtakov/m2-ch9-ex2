@@ -10,7 +10,7 @@ import { getTodosAction } from 'actions/getTodosAction';
 
 const AllTodoPage = () => {
   const dispatch = useDispatch();
-  const selectedSort = useSelector((state) => state.selectedSort);
+  const selectedSort = useSelector((state) => state.appState.selectedSort);
 
   const selectorHandler = (value) => {
     dispatch({ type: 'SET_SORT', payload: value });
